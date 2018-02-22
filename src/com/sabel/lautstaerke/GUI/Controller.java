@@ -11,15 +11,21 @@ public class Controller implements EventController, Observer {
     private LautstaerkeLesen modelLesen;
     private LautstraerkeSchreiben modelSchreiben;
     private int lautstaerke;
+    private LautstaerkeFenster view;
+    private final int MAXVOLUME = 10;
 
     public Controller(LautstraerkeSchreiben modelSchreiben) {
         this.modelSchreiben = modelSchreiben;
     }
 
+    public void setView(LautstaerkeFenster view) {
+        this.view = view;
+    }
+
 
     @Override
     public void lauter() {
-        modelSchreiben.setLautstaerke(lautstaerke += 1);
+        modelSchreiben.setLautstaerke(lautstaerke + 1);
     }
 
     @Override
@@ -37,5 +43,21 @@ public class Controller implements EventController, Observer {
         //controller holt sich Daten vom Model
         LautstaerkeLesen model = (LautstaerkeLesen) o;
         lautstaerke = model.getLautstaerke();
+
+        //
+        view.setLautstaerke(lautstaerke);
+
+        // Controller (de)aktiviert Buttons in View
+        if(lautstaerke <= 0){
+            view.deaktiviereMinus();
+        }else{
+            view.aktiviereMinus();
+        }
+        if(lautstaerke >=MAXVOLUME){
+            view.deaktivierePlus();
+        }else{
+            view.aktivierePlus();
+        }
+
     }
 }

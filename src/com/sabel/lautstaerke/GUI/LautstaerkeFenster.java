@@ -1,16 +1,11 @@
 package com.sabel.lautstaerke.GUI;
-
-import com.sabel.lautstaerke.Model.Lautstaerke;
-import com.sabel.lautstaerke.Model.LautstaerkeLesen;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Observable;
-import java.util.Observer;
 
-public class LautstaerkeFenster extends JFrame implements Observer{
+
+public class LautstaerkeFenster extends JFrame{
 
     private JButton buttonLauter, buttonLeiser, buttonMute;
     private JLabel labelLautstaerke;
@@ -42,14 +37,7 @@ public class LautstaerkeFenster extends JFrame implements Observer{
         this.setVisible(true);
     }
 
-    @Override
-    public void update(Observable o, Object arg) {
-        //view holt sich Daten vom Model
-        LautstaerkeLesen model = (LautstaerkeLesen)o;
-
-        int lautstaerke = model.getLautstaerke();
-
-
+    public void setLautstaerke(int lautstaerke) {
         //Daten werden angezeigt
         String lautstaerkeText = String.valueOf(lautstaerke);
         labelLautstaerke.setText(lautstaerkeText);
@@ -76,6 +64,26 @@ public class LautstaerkeFenster extends JFrame implements Observer{
                 controller.mute();
             }
         });
+
+
+
     }
-    
+
+    public void deaktiviereMinus(){
+        buttonLeiser.setEnabled(false);
+    }
+
+    public void aktiviereMinus(){
+        buttonLeiser.setEnabled(true);
+    }
+
+    public void deaktivierePlus(){
+        buttonLauter.setEnabled(false);
+    }
+
+    public void aktivierePlus(){
+        buttonLauter.setEnabled(true);
+    }
+
+
 }
